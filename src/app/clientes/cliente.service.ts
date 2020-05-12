@@ -22,4 +22,12 @@ private httpHeaders = new HttpHeaders({'Content-type': 'application/json'})
     return this.http.post<Cliente>(this.urlEndPoint,cliente,{headers: this.httpHeaders})
   }
 
+  getCliente(id): Observable<Cliente> {
+    return this.http.get<Cliente>(`${this.urlEndPoint}/${id}`)
+  }
+
+  update(cliente: Cliente): Observable<Cliente>{
+    return this.http.put<Cliente>(`${this.urlEndPoint}/${cliente.id}`, cliente, {headers: this.httpHeaders})
+  }
+
 }
