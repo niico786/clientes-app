@@ -38,7 +38,7 @@ export class FormComponent implements OnInit {
    },
      err => {
        this.errores = err.error.errors as string[];
-       console.error('Codigo desde es el backend: ' + err.status);
+       console.error('Codigo de error desde es el backend: ' + err.status);
        console.error(err.error.errors);
      })
   }
@@ -51,7 +51,7 @@ export class FormComponent implements OnInit {
       },
         err => {
           this.errores = err.error.errors as string[];
-          console.error('Codigo desde es el backend: ' + err.status);
+          console.error('Codigo de error desde es el backend: ' + err.status);
           console.error(err.error.errors);
         })
   }
