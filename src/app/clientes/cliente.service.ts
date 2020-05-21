@@ -16,7 +16,13 @@ private httpHeaders = new HttpHeaders({'Content-type': 'application/json'})
 
   getClientes(): Observable<Cliente[]> {
     return this.http.get(this.urlEndPoint).pipe(
-      map( (response) => response as Cliente[] )
+      map( response => {
+        let clientes = response as Cliente[];
+        return clientes.map(cliente => {
+            cliente.nombre = cliente.nombre.toUpperCase();
+            return cliente;
+        });
+      })
     );
   }
 
@@ -55,6 +61,7 @@ private httpHeaders = new HttpHeaders({'Content-type': 'application/json'})
           return throwError(e);
         }
         
+
         this.router.navigate(['/clientes']);
         console.error(e.error.mensaje, 'error');
         Swal.fire(e.error.mensaje, e.error.error, 'error');
