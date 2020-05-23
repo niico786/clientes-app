@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { formatDate, DatePipe } from '@angular/common';
 import { Cliente } from './cliente.js';
 import { of, Observable, throwError } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http'
@@ -20,6 +21,9 @@ private httpHeaders = new HttpHeaders({'Content-type': 'application/json'})
         let clientes = response as Cliente[];
         return clientes.map(cliente => {
             cliente.nombre = cliente.nombre.toUpperCase();
+            // cliente.createAt = formatDate(cliente.createAt, 'dd-MM-yy', 'en-US'); Segunda forma de formatear una fecha
+            let datePipe = new DatePipe('en-US');
+            cliente.createAt = datePipe.transform(cliente.createAt, 'dd/MM/yyyy')
             return cliente;
         });
       })
@@ -60,7 +64,7 @@ private httpHeaders = new HttpHeaders({'Content-type': 'application/json'})
         if(e.status == 400){
           return throwError(e);
         }
-        
+
 
         this.router.navigate(['/clientes']);
         console.error(e.error.mensaje, 'error');
