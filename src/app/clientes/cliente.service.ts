@@ -22,8 +22,8 @@ private httpHeaders = new HttpHeaders({'Content-type': 'application/json'})
         return clientes.map(cliente => {
             cliente.nombre = cliente.nombre.toUpperCase();
             // cliente.createAt = formatDate(cliente.createAt, 'dd-MM-yy', 'en-US'); Segunda forma de formatear una fecha
-            let datePipe = new DatePipe('en-US');
-            cliente.createAt = datePipe.transform(cliente.createAt, 'dd/MM/yyyy')
+            let datePipe = new DatePipe('es');
+            cliente.createAt = datePipe.transform(cliente.createAt, 'EEEE dd, MMMM yyyy')
             return cliente;
         });
       })
