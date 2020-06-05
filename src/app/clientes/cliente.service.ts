@@ -3,7 +3,7 @@ import { formatDate, DatePipe } from '@angular/common';
 import { Cliente } from './cliente.js';
 import { of, Observable, throwError } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http'
-import { map, catchError } from 'rxjs/operators';
+import { map, catchError, tap } from 'rxjs/operators';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
 
@@ -15,17 +15,30 @@ private httpHeaders = new HttpHeaders({'Content-type': 'application/json'})
 
   constructor(private http: HttpClient, private router: Router) { }
 
-  getClientes(): Observable<Cliente[]> {
-    return this.http.get(this.urlEndPoint).pipe(
-      map( response => {
+  getClientes(page: number): Observable<any> {
+    return this.http.get(this.urlEndPoint + '/page/' + page).pipe(
+      tap( (response:any) => {
+      console.log('ClienteSerivce: tap1');
+      (response.content as Cliente[]).forEach(cliente => {
+        console.log(cliente.nombre);
+      });
+      }),
+      map( (response:any) => {
         let clientes = response as Cliente[];
-        return clientes.map(cliente => {
+        (response.content as Cliente[]).map(cliente => {
             cliente.nombre = cliente.nombre.toUpperCase();
             // cliente.createAt = formatDate(cliente.createAt, 'dd-MM-yy', 'en-US'); Segunda forma de formatear una fecha
-            let datePipe = new DatePipe('es');
-            //cliente.createAt = datePipe.transform(cliente.createAt, 'EEEE dd, MMMM yyyy')
+            // let datePipe = new DatePipe('es');
+            // cliente.createAt = datePipe.transform(cliente.createAt, 'EEEE dd, MMMM yyyy')
             return cliente;
         });
+        return response;
+      }),
+      tap(response => {
+        console.log('ClienteService: tap2');
+        (response.content as Cliente[]).forEach(cliente => {
+          console.log(cliente.nombre);
+        })
       })
     );
   }
