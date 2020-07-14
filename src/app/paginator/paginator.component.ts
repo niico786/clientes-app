@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnChanges } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
 
 @Component({
   selector: 'paginator-nav',
@@ -16,23 +16,31 @@ export class PaginatorComponent implements OnInit, OnChanges {
 
   constructor() { }
 
-  ngOnInit (){
+  ngOnInit() {
+    this.initPaginator();
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    let paginadorActualizado = changes['paginador'];
+
+    if(paginadorActualizado.previousValue) {
+      this.initPaginator();
+    }
 
   }
 
-  ngOnChanges(): void {
-
+  private initPaginator(): void {
     // Caluclo el desde buscando el valor minimo entre
     //  el maximo entre 1 (que es el minimo que puede tomar la pagina) y la pagina actual - 4 ,
     //  y el total de paginas - 5
-     this.desde = Math.min(Math.max(1, this.paginador.number-4), this.paginador.totalPages-5);
-     // Calculo el hasta buscando el maximo valor entre
-     // el minimo entre el total de paginas(que es el maximo valor que puede tomar una pagina) y la pagina actual + 4
-      // y el 6
-     this.hasta = Math.max(Math.min(this.paginador.totalPages, this.paginador.number+4), 6);
+    this.desde = Math.min(Math.max(1, this.paginador.number - 4), this.paginador.totalPages - 5);
+    // Calculo el hasta buscando el maximo valor entre
+    // el minimo entre el total de paginas(que es el maximo valor que puede tomar una pagina) y la pagina actual + 4
+    // y el 6
+    this.hasta = Math.max(Math.min(this.paginador.totalPages, this.paginador.number + 4), 6);
 
-    if(this.paginador.totalPages > 5){
-      this.paginas = new Array(this.hasta - this.desde + 1).fill(0).map((_valor, indice) => indice + this.desde  );
+    if (this.paginador.totalPages > 5) {
+      this.paginas = new Array(this.hasta - this.desde + 1).fill(0).map((_valor, indice) => indice + this.desde);
     } else {
       this.paginas = new Array(this.paginador.totalPages).fill(this.paginador.totalPages).map((_valor, indice) => indice + 1);
     }
