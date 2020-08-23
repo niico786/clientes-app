@@ -12,17 +12,18 @@ export class DetalleComponent implements OnInit {
   cliente: Cliente;   
   titulo: string = "Detalle del cliente";
 
-  constructor(private clienteService: ClienteService, private activatedRote: ActivatedRoute) { }
+  constructor(private clienteService: ClienteService,
+     private ActivatedRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.activatedRote.paramMap.subscribe(params =>{
+    this.ActivatedRoute.paramMap.subscribe(params =>{
       let id:number = +params.get('id');
       if(id){
         this.clienteService.getCliente(id).subscribe(cliente =>{
           this.cliente = cliente;
-        })
+        });
       }
-    })
+    });
   }
 
 }
