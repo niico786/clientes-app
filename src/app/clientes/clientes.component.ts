@@ -1,6 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Cliente } from './cliente';
-import { CLIENTES } from './clientes.json';
 import { ClienteService } from './cliente.service';
 import Swal from 'sweetalert2'
 import { tap } from 'rxjs/operators';
