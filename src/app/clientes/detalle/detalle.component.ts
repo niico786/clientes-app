@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Cliente } from '../cliente';
 import { ClienteService } from '../cliente.service';
 import { ActivatedRoute } from '@angular/router';
@@ -11,7 +11,7 @@ import { HttpEventType } from '@angular/common/http';
   styleUrls: ['./detalle.component.css']
 })
 export class DetalleComponent implements OnInit {
-  cliente: Cliente;   
+  @Input() cliente: Cliente;   
   titulo: string = "Detalle del cliente";
   fotoSeleccionada: File;
   progreso:number = 0;
@@ -19,15 +19,8 @@ export class DetalleComponent implements OnInit {
   constructor(private clienteService: ClienteService,
      private ActivatedRoute: ActivatedRoute) { }
 
-  ngOnInit(): void {
-    this.ActivatedRoute.paramMap.subscribe(params =>{
-      let id:number = +params.get('id');
-      if(id){
-        this.clienteService.getCliente(id).subscribe(cliente =>{
-          this.cliente = cliente;
-        });
-      }
-    });
+  ngOnInit(){
+
   }
 
   seleccionarFoto(event){
@@ -53,8 +46,6 @@ export class DetalleComponent implements OnInit {
           this.cliente = response.cliente as Cliente; 
           Swal.fire('La foto se ha subido completamente',response.mensaje, 'success');
         }
-       // this.cliente = cliente;
-       
       });
     }
   }

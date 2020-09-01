@@ -108,15 +108,6 @@ private httpHeaders = new HttpHeaders({'Content-type': 'application/json'})
     });
 
     return this.http.request(req);
-
-   /*  return this.http.request(req).pipe(
-      map( (response: any) => response.cliente as Cliente),
-      catchError(e => {
-        console.error(e.error.mensaje);
-        Swal.fire(e.error.mensaje, e.error.error, 'error');
-        return throwError(e);
-      })
-    ); */
   }
 
 }
