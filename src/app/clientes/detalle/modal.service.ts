@@ -10,7 +10,6 @@ export class ModalService {
   constructor() { }
 
   abrirModal(){
-    alert("Abriendo modal")
     this.modal = true;
   }
 
