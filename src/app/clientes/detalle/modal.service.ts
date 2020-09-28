@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 
 @Injectable({
   providedIn: 'root'
@@ -6,6 +6,8 @@ import { Injectable } from '@angular/core';
 export class ModalService {
 
   public modal: boolean = false;
+
+  private _notificarUpload = new EventEmitter<any>();
 
   constructor() { }
 
@@ -16,4 +18,9 @@ export class ModalService {
   cerrarModal(){
     this.modal = false;
   }
+
+  get notificarUpload(): EventEmitter<any> {
+    return this._notificarUpload;
+  }
+
 }
